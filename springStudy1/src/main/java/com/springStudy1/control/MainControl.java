@@ -3,9 +3,10 @@ package com.springStudy1.control;
 import org.springframework.stereotype.Controller; // <-subvlet 클래스와 같은 역할 함
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
-@Controller
+@Controller // 진짜 이름에 맞게 붙여야 함 class가 service면 service로 해야됨
 public class MainControl {//<- @controller 하면 서블릿으로 등록시킴 
      
 	@GetMapping("/test") // localhost/test ( "요청처리주소") 
@@ -16,11 +17,27 @@ public class MainControl {//<- @controller 하면 서블릿으로 등록시킴
 	
     @GetMapping("/signIn")
     public String signInpage() { //메소드 이름은 자유로 가능
-    	
+    	System.out.println("아이디 비번 출력 :");
     	return "signIn.html";
 	
 }
-
+ 
+    @GetMapping("/")
+    public String homePage() {  //페이지를 제공하는 1번째 방법
+    	return "index.html";
+    }
+    
+    @GetMapping("/list")
+    public ModelAndView listpage(@RequestParam String type) {
+    	System.out.println(type);
+    	ModelAndView mav = new ModelAndView("list.html"); // 페이지를 제공하는 2번째 방법
+//    	mav.setViewName("");
+    	
+    	
+    	
+    	return mav;
+    }
+    
 
 
     }
