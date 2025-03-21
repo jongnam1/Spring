@@ -1,13 +1,21 @@
 package com.springStudy1.control;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller; // <-subvlet 클래스와 같은 역할 함
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.springStudy1.School;
+import com.springStudy1.service.SchoolService;
 
 @Controller // 진짜 이름에 맞게 붙여야 함 class가 service면 service로 해야됨
 public class MainControl {//<- @controller 하면 서블릿으로 등록시킴 
+	
+	@Autowired
+	private SchoolService schoolService;
      
 	@GetMapping("/test") // localhost/test ( "요청처리주소") 
 	public String testPage() { // <- 이게 실행된다
@@ -24,21 +32,24 @@ public class MainControl {//<- @controller 하면 서블릿으로 등록시킴
  
     @GetMapping("/")
     public String homePage() {  //페이지를 제공하는 1번째 방법
-    	return "index.html";
+    	return "index";
     }
     
     @GetMapping("/list")
     public ModelAndView listpage(@RequestParam String type) {
     	System.out.println(type);
-    	ModelAndView mav = new ModelAndView("list.html"); // 페이지를 제공하는 2번째 방법
+    	ModelAndView mav = new ModelAndView("list"); // 페이지를 제공하는 2번째 방법
 //    	mav.setViewName("");
     	
+    	//클라이언트가 요청한 유치원,초등학교, 중학교, 고등학교에 대해 조회하기 위헤
+    	//service클래스 객체에 넘겨주고 필요한 데이터를 받아서 뷰페이지와 함께 클라이언트에게 전달
     	
+    	List<School> list = schoolService.typeSelect(type);
+    	mav.addObject("list",list); //ModelAndView에 저장
     	
     	return mav;
     }
-    
-
+   
 
     }
     

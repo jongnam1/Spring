@@ -14,15 +14,16 @@ public class AppConfig {
 	public DataSource dataSource() {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-		ds.setUsername("dvp");
+		ds.setUsername("project");
 		ds.setPassword("1234");
-		ds.setUrl("jdbcLmysql://localhost:3306/dvp");
+		ds.setUrl("jdbc:mysql://localhost:3306/project");
 		return ds;
 	}
 	@Bean
 	public JdbcTemplate jdbc(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
 	}
+	
 }
 
 /*
