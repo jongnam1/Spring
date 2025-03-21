@@ -5,30 +5,65 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller; // <-subvlet 클래스와 같은 역할 함
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.springStudy1.School;
+import com.springStudy1.DTO.User;
 import com.springStudy1.service.SchoolService;
+import com.springStudy1.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller // 진짜 이름에 맞게 붙여야 함 class가 service면 service로 해야됨
 public class MainControl {//<- @controller 하면 서블릿으로 등록시킴 
 	
 	@Autowired
 	private SchoolService schoolService;
-     
+	
+	@Autowired
+	private UserService userService;
+      
 	@GetMapping("/test") // localhost/test ( "요청처리주소") 
 	public String testPage() { // <- 이게 실행된다
 		System.out.println("와 진짜 실행된다.... 한글 좋아...");
 		return "hello.html";  // <- 브라우저에서 페이지 띄우는 방법
 	}
-	
+	//로그인 화면
     @GetMapping("/signIn")
-    public String signInpage() { //메소드 이름은 자유로 가능
-    	System.out.println("아이디 비번 출력 :");
-    	return "signIn.html";
-	
-}
+    public String login() { //메소드 이름은 자유로 가능    	
+    	return "signIn";
+    }
+    @PostMapping("/signIn")
+    public String login(@RequestParam("id") String id, @RequestParam("pw") String pw,
+    		HttpSession session) {
+    	// 매개변수를 통해 session객체 가져오기
+    	boolean isSuccess = userService.loginChk(id, pw);
+    	if(isSuccess )
+    		session.setAttribute("user", id);
+    	return "index";
+    }
+    //회원가입 화면
+    @GetMapping("/signUp")
+    public String joing() {
+    	return "signUp";
+    }
+    //정보수정 화면
+    @GetMapping("/userUpdate")
+    public String memberUpdate() {
+    	return "memberModify";
+    }
+    @PostMapping("/signUp")
+    public String joinSave(@ModelAttribute User user ) {
+    	System.out.println(user.getUserId());
+    	
+    	userService.save(user);
+    	
+    	
+    	return "index"; //회원가입 저장하고 첫페이지 돌려 보내기
+    }
  
     @GetMapping("/")
     public String homePage() {  //페이지를 제공하는 1번째 방법
@@ -49,6 +84,7 @@ public class MainControl {//<- @controller 하면 서블릿으로 등록시킴
     	
     	return mav;
     }
+    
    
 
     }
