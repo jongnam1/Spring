@@ -51,7 +51,7 @@ public class UserService {
 		user.setUserLike(param.get("like"));
 		user.setUserPw(param.get("pw"));
 		
-		userDao.update( );
+		userDao.update( user );
 	}
 
 }
