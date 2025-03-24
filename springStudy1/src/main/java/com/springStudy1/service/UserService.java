@@ -1,5 +1,7 @@
 package com.springStudy1.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,26 @@ public class UserService {
 	public boolean loginChk(String id, String pw) {	
 		   			
 		return userDao.findByUserIdAndUserPw(id,pw);
+	}
+
+	public User userDetail(String id) {
+		
+		User info = userDao.findById(id);	   
+		
+		return info;
+	}
+
+	public void update(Map<String, String> param) {
+		
+		User user = new User();
+		user.setUserAddr(param.get("addr"));
+		user.setUserEmail(param.get("email"));
+		user.setUserJob(param.get("job"));
+		user.setUserId(param.get("id"));
+		user.setUserLike(param.get("like"));
+		user.setUserPw(param.get("pw"));
+		
+		userDao.update( );
 	}
 
 }

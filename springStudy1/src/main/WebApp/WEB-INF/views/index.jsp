@@ -12,7 +12,7 @@
   <div id="wrap">
      <ul id="menulist">
         <li><a href=""> 어린이집 </a></li>
-        <li><a href="list?type=유">유치원   </a></li>   // ?type은 파라미터
+        <li><a href="list?type=유">유치원   </a></li>   type은 파라미터
         <li><a href="list?type=초">초등학교  </a></li>
         <li><a href="list?type=중">중학교   </a></li>
         <li><a href="list?type=고">고등학교  </a></li>
@@ -24,11 +24,20 @@
      
      
      <hr>
+     <%
+       String user= (String)session.getAttribute("user");
+     
+       if(user == null){ //로그인 하지 않았거나 로그인 실패
+     
+     %>
      
      <a href="/signIn">로그인</a>
      <a href="/signUp">회원가입</a>
+     <% }else{ %>
+        <b><%=user %><a href="/logout">로그아웃</a></b>
      <a href="/userUpdate">정보수정</a>
      
+     <%} %>
    </div>
    
    

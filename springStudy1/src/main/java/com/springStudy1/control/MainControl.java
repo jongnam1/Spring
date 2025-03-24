@@ -1,6 +1,7 @@
 package com.springStudy1.control;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller; // <-subvlet 클래스와 같은 역할 함
@@ -17,7 +18,7 @@ import com.springStudy1.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
-@Controller // 진짜 이름에 맞게 붙여야 함 class가 service면 service로 해야됨
+@Controller // 진짜 이름에 맞게 붙여야 함 class가 service면 service로 -해야됨
 public class MainControl {//<- @controller 하면 서블릿으로 등록시킴 
 	
 	@Autowired
@@ -52,9 +53,34 @@ public class MainControl {//<- @controller 하면 서블릿으로 등록시킴
     }
     //정보수정 화면
     @GetMapping("/userUpdate")
-    public String memberUpdate() {
-    	return "memberModify";
+    public ModelAndView memberUpdate(HttpSession session) {
+    	ModelAndView mav = new ModelAndView("memberModify");
+    	
+    	//현재 로그인한 회원의 정보를 가져와서 페이지에 출력하기
+    	String id = (String)session.getAttribute("user"); //로그인한 아이디
+    	User info = userService.userDetail( id ); //회원정보 조회가져오기
+    	mav.addObject("info", info); // 회원정보 모델엔뷰에 저장해야 뷰에 출력
+    	
+    	return mav;
     }
+    
+    @PostMapping("/userUpdate")
+    public String userUpdate( @RequestParam Map<String, String> param) {
+    	//input 태그의 name이 key, input태그에 작성한 내용이 value
+    	//map에 각각 저장된다.
+    	System.out.println(param.get("id"));
+    	
+    	userService.update( param );
+    	
+    	return "index";
+    }
+    
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+    	session.removeAttribute("user");
+    	return "index";
+    }
+    
     @PostMapping("/signUp")
     public String joinSave(@ModelAttribute User user ) {
     	System.out.println(user.getUserId());
