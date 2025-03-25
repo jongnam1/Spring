@@ -34,8 +34,108 @@
       <p th:case="김명준"> 은호왈, 그만좀 먹을거 가져와</p>
       <p th:case="이정훈"> 은호왈, 점심머 먹을까?</p>
       <p th:case="곽찬양"> 은호왈, 누구신지...?</p>
-      
   </div>
   
+  <form th:object="${user}"method="get" action="/testSave">
+  
+   아이디 : <input type="text" th:field="*{id}"> <br>
+   이름 : <input type="text" th:field="*{name}"> <br>
+   연락처 : <input type="text" th:field="*{tel}" > <br>
+   나이 : <input type="number"  th:field="*{age}"> <br>
+   
+   <button> 저장 </button>  
+  
+  </form>
+  
+  <table th:object="${user}">
+     <tr>
+        <td>이름</td>
+        <td th:text="*{id}"></td>
+     </tr>
+     <tr>
+        <td>나이</td>
+        <td th:text="*{age}"></td>
+     </tr>
+     
+  
+  </table>
+  <!-- 
+     for( String a : animal) {
+     
+     }
+  
+   -->
+  
+  <ul>
+  
+     <li th:each="a : ${animal}" th:text="${a}"></li>
+     
+  </ul>
+  
+  
+
 </body>
 </html>
+
+<!-- 
+  thymeleaf 문법 정리
+  
+  ${ } :변수 - Model 또는 ModelAndView로 지정한 name만 사용가능
+             model.addAttribute(name, value) 형식으로 
+             modelAndView.addObject(name, value)형식으로
+        th: each의 변수 사용 가능     
+        
+  *{ } : 선택 변수 - MemberDto라는 클래스의 객체에 age, tel변수를 출력하려면
+                   객체.age, 객체.tel 이라고 해야한다.
+                <div th:object="${member}">
+                   <b th:text="*{age}></b>
+                </div>                
+   @{ } : url 링크 표현식 -  <a href="/test"></a>
+                          <a th:href="@{/test}"</a>
+                          
+   #{ } : 메세지, properties의 값을 표현할때 사용
+   
+   반복문  th: each
+   thymeleaf의 반복문, 자바의 for( int num: numbers)의 동작이다.
+   반복 할 태그에 작성해야 한다.
+   names에 배열 또는 컬렉션 객체가 담겨 있다면
+   <div>
+        <b th: each="name : ${names}" th:text="${name}">  </b>
+   </div> 
+    이와 같은 방법으로 사용해야 한다.
+    
+  조건문 th:if, th: unless, th:switch ,  삼항연산자(조건연산자)
+  
+    num변수에 10이 저장되어 있다면
+    <p th:if="${num > 8}"> 8보다 크다</p>
+    <p th:unless="${num > 8}" 8보다 작다</p>
+    
+    위 태그를 실행하면 8보다 크다라고 화면에 나온다.
+       8보다 작다는 unless 뒤의 조건이 거짓일 경우에 실행
+     th: if는 조건이 참일경우 실행 되는 태그이고, th:unless는 조건이 거짓일경우
+     
+     
+    출력 - th:text, th:utext, th: value
+    
+    th: text="${Model 또는 ModelAndView로 지정한 name(변수명) }"
+    
+    th:value는 input태그의 value 값지정, select 태그의 value 값 지정
+    th: utext는 텍스트가 아닌 html태그로 동작됨
+    
+    변수 - 변수를 생성하고 값 저장하는 방법 ( th: with)
+    
+    th:with를 통해 생성된 변수는 사영범위가 제한적이다.
+    생성된 태그와 하위 태그에서만 사용 가능
+    
+    <div >
+      <div th:with="num=123">
+        <p th:text="${num}></p>
+          <div>
+            <b th: text="${num}"></b>
+          </div>     
+      </div>    
+    </div>
+       타임리프 내부 주석 <!--/*  */-->
+  
+ -->
+

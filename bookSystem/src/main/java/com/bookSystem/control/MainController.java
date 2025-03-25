@@ -34,6 +34,7 @@ public class MainController {
 		animal.add("뱀"); animal.add("달");
 		animal.add("또끼"); animal.add("소");
 		
+		model.addAttribute("animal", animal);
 		
 		return "test";
 	}
