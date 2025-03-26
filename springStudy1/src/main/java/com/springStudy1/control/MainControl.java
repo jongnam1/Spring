@@ -38,7 +38,7 @@ public class MainControl {//<- @controller 하면 서블릿으로 등록시킴
     	return "signIn";
     }
     @PostMapping("/signIn")
-    public String login(@RequestParam("id") String id, @RequestParam("pw") String pw,
+    public String login(@RequestParam("id") String id, @RequestParam("pw") String pw,   // 정보를 하나씩 가져오는것
     		HttpSession session) {
     	// 매개변수를 통해 session객체 가져오기
     	boolean isSuccess = userService.loginChk(id, pw);
@@ -65,7 +65,7 @@ public class MainControl {//<- @controller 하면 서블릿으로 등록시킴
     }
     
     @PostMapping("/userUpdate")
-    public String userUpdate( @RequestParam Map<String, String> param) {
+    public String userUpdate( @RequestParam Map<String, String> param) {    // 정보를 통쨰로 가져오는것
     	//input 태그의 name이 key, input태그에 작성한 내용이 value
     	//map에 각각 저장된다.
     	System.out.println(param.get("id"));
