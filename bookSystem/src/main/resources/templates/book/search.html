@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+
+</head>
+
+
+     <div layout:fragment="main" id="main">
+     
+     <h1> 도서 검색</h1>
+     
+     <div id="searchWrap">
+         <form id="searchFm" th:object="${bookSearchDto" method="get" action="/bookSearch/result">
+            <div id="searchBox">
+                <label th:for="keyword">검색</label>
+                <input type="text" th:field="*{keyword}">
+               <!-- 부트스트랩에서 돋보기 모양 아이콘찾아서 여기에 넣어줘요! 나우! 빨리! 지금! -->
+                <i class="bi bi-search"></i>
+            </div>
+            제목만 검색<input type="checkbox" id="option" value="title">
+            <input type="hidden" th:field="*{option}">
+     
+         </form>
+       
+       
+     </div>
+     
+     </div>
+</html>
